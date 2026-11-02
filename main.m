@@ -24,6 +24,7 @@ StopTime = 25; % s
 % SETUP SCRIPTS
 traj = setupTargetTrajectory();
 drone = setupDrone();
+boat = setupBoat();
 environment = setupEnvironment();
 controller = setupController();
 controllerLin = setupLinearController(drone, environment);
@@ -35,7 +36,7 @@ params = [drone.mass; environment.g; drone.inertia_diagonalForm];
 createParameterBus(controller, strcat(model, '/Drone Controller/Nonlinear MPC Controller'), 'paramsBus', {params});
 set_param(model, 'StopTime', num2str(StopTime));
 out = sim(model);
-close_system(model, 0);
+%close_system(model, 0);
 
 % PLOT
 pd = squeeze(out.dronePosition.Data);   if size(pd,1) ~= 3, pd = pd'; end
