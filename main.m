@@ -18,6 +18,7 @@ clear; close all; clc;
 addpath(genpath(pwd))
 %model = "model_NLMPC_LMPCyaw0";
 model = "model_NLMPC_LMPCyawVar";
+
 StopTime = 25; % s
 
 % SETUP SCRIPTS

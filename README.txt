@@ -1,6 +1,13 @@
-- Quaternion convention: scalar last in accordance with Bernelli notes del Poli Space Eng anno scorso 
-  [qx; qy; qz; qscalar] ~ [e1*sin(phi/2); e2*sin(phi/2); e3*sin(phi/2); qscalar] where e is the euler 
-  angle versor indicating the rotation direction in space
-  WARNING: Aerospace Blockset uses Scalar first
-  
-- 
+Simulink Models:
+
+boatModel.slx contains (who would have guessed) a/maybe several USV model(s) to try robustness on
+
+model_NLMPC_LMPC_yaw0.slx contains both a Non Linear MPC and a Linear MPC based on a quaternion 
+based (inertial) drone dynamics model which is linearized in hover
+
+model_NLMPC_LMPC_yaw0.slx contains both a Non Linear MPC and a Linear MPC based on a quaternion 
+based (inertial) drone dynamics model which is linearized in hover and constantly corrected for yaw
+
+model_LMPC_yaw0_relativeDynamics contains a Linear MPC based on a quaternion based drone-USV
+relative dynamics model, described via a USV-centered reference frame and constantly corrected
+for yaw 
