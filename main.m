@@ -22,6 +22,7 @@ model = "model_NLMPC_LMPCyawVar";
 StopTime = 25; % s
 
 % SETUP SCRIPTS
+settings = setupSettings();
 traj = setupTargetTrajectory();
 drone = setupDrone();
 boat = setupBoat();
