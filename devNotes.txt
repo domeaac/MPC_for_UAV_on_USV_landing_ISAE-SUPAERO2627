@@ -1,6 +1,18 @@
-- Quaternion convention: scalar last in accordance with Bernelli notes del Poli Space Eng anno scorso 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+CLOSED NOTES
+
+- Quaternion convention: in my blocks scalar last (JPL convention I think) in accordance with Bernelli notes del Poli Space Eng anno scorso 
   [qx; qy; qz; qscalar] ~ [e1*sin(phi/2); e2*sin(phi/2); e3*sin(phi/2); qscalar] where e is the euler 
   angle versor indicating the rotation direction in space
-  WARNING: Aerospace Blockset uses Scalar first
-  
-- 
+  WARNING: Aerospace Blockset uses Scalar first (that is why every ABS block goes through DCM first)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%  
+KEEP IN MIND
+
+- Waves model for the boat is validated but it is not written by me, AI-generated since I only wanted something
+  to test the relative dynamics MPC 
+- State machine for MPC scheduling in progress
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+OPEN QUESTIONS
+
+Gains for plane model?
+Gains for MPC weights? 
