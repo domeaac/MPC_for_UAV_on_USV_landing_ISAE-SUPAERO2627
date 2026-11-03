@@ -22,6 +22,8 @@ cfg.weights.rate = [0.1 0.1 0.1 0.1];
 
 %% WEIGHTS FOR SCHEDULED CONTROLLERS
 cfg.weightsScheduled = scheduledWeightsConfig();
+cfg.limitsScheduled = scheduledLimitsConfig();
+
 
 % LIMITS
 % The oprimizer sees these as hard constraints

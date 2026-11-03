@@ -1,14 +1,27 @@
 function controllers = setupScheduledLinearControllers(drone, environment)
 cfg     = setupMPCconfigs();
 weights = cfg.weightsScheduled;
+limits  = cfg.limitsScheduled;
 phases  = {'APPROACH', 'CLOSEUP', 'LANDING', 'FLARE'};
 
 plant   = buildHoverPlant(drone, environment);
-baseMPC = buildBaseMPC(plant, cfg);
+baseMPC = mpc(plant, cfg.Ts, cfg.P, cfg.M);
 
 controllers = struct();
 for k = 1:numel(phases)
-    controllers.(phases{k}) = setWeights(baseMPC, weights.out(k,:), weights.rate(k,:));
+    w.out  = weights.out(k,:);
+    w.rate = weights.rate(k,:);
+
+    lim.thrust = limits.thrust(k,:);
+    lim.torque = limits.torque(k,:);
+    lim.tilt   = limits.tilt(k);
+    lim.vel    = limits.vel(k,:);
+
+    obj = baseMPC;
+    obj = setWeights(obj, w);
+    obj = setLimits(obj, lim);
+
+    controllers.(phases{k}) = obj;
 end
 end
 
@@ -31,27 +44,34 @@ plant = ss(A, B, eye(12), 0);
 end
 
 
-function mpcobj = buildBaseMPC(plant, cfg)
-mpcobj = mpc(plant, cfg.Ts, cfg.P, cfg.M);
-
-mpcobj.MV(1).Min = cfg.limits.thrust(1);
-mpcobj.MV(1).Max = cfg.limits.thrust(2);
-for i = 2:4
-    mpcobj.MV(i).Min = cfg.limits.torque(1);
-    mpcobj.MV(i).Max = cfg.limits.torque(2);
-end
-
-if ~isempty(cfg.limits.tilt)
-    qlim = sin(cfg.limits.tilt / 2);
-    for i = 7:8
-        mpcobj.OV(i).Min = -qlim;
-        mpcobj.OV(i).Max =  qlim;
-    end
-end
+function mpcobj = setWeights(mpcobj, w)
+mpcobj.Weights.OutputVariables          = w.out;
+mpcobj.Weights.ManipulatedVariablesRate = w.rate;
 end
 
 
-function mpcobj = setWeights(mpcobj, outWeights, rateWeights)
-mpcobj.Weights.OutputVariables          = outWeights;
-mpcobj.Weights.ManipulatedVariablesRate = rateWeights;
+function mpcobj = setLimits(mpcobj, lim)
+THRUST = 1;
+TORQUE = 2:4;
+VEL    = 4:6;
+TILT   = 7:8;
+
+mpcobj.MV(THRUST).Min = lim.thrust(1);
+mpcobj.MV(THRUST).Max = lim.thrust(2);
+
+for i = TORQUE
+    mpcobj.MV(i).Min = lim.torque(1);
+    mpcobj.MV(i).Max = lim.torque(2);
+end
+
+for i = 1:3
+    mpcobj.OV(VEL(i)).Min = -lim.vel(i);
+    mpcobj.OV(VEL(i)).Max =  lim.vel(i);
+end
+
+qlim = sin(deg2rad(lim.tilt) / 2);
+for i = TILT
+    mpcobj.OV(i).Min = -qlim;
+    mpcobj.OV(i).Max =  qlim;
+end
 end
