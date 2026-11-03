@@ -25,6 +25,7 @@ StopTime = 25; % s
 traj = setupTargetTrajectory();
 drone = setupDrone();
 boat = setupBoat();
+plane = setupPlane();
 environment = setupEnvironment();
 controller = setupController();
 controllerLin = setupLinearController(drone, environment);
