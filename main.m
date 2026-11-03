@@ -17,7 +17,8 @@ clear; close all; clc;
 % INIT
 addpath(genpath(pwd))
 %model = "model_NLMPC_LMPCyaw0";
-model = "model_NLMPC_LMPCyawVar";
+%model = "model_NLMPC_LMPCyawVar";
+model = "model_LMPC_yawVar_relative";
 
 StopTime = 25; % s
 
@@ -29,8 +30,10 @@ boat = setupBoat();
 plane = setupPlane();
 environment = setupEnvironment();
 controller = setupController();
-controllerLin = setupLinearController(drone, environment);
+scheduler = setupScheduler();
 
+%controllerLin = setupLinearController(drone, environment);
+scheduledControllersLin = setupScheduledLinearControllers(drone,environment);
 
 % RUN
 load_system(model);
