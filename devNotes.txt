@@ -10,12 +10,10 @@ KEEP IN MIND
 
 - Waves model for the boat is validated but it is not written by me, AI-generated since I only wanted something
   to test the relative dynamics MPC 
-- State machine for MPC scheduling in progress
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 WIP
 
-- Scheduled MPC
-
+- weights tuning MPC
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 OPEN QUESTIONS
 
