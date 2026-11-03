@@ -18,7 +18,7 @@ clear; close all; clc;
 addpath(genpath(pwd))
 %model = "model_NLMPC_LMPCyaw0";
 %model = "model_NLMPC_LMPCyawVar";
-model = "model_LMPC_yawVar_relative";
+model = "model_LMPC_yawVar_Relative";
 
 StopTime = 25; % s
 
@@ -31,14 +31,18 @@ plane = setupPlane();
 environment = setupEnvironment();
 scheduler = setupScheduler();
 
-%controller = setupController(); % NON LINEAR MPC
+%controller = setupController(); % NLMPC
 %controllerLin = setupLinearController(drone, environment); % LINEAR MPC
 scheduledControllersLin = setupScheduledLinearControllers(drone,environment); % SCHEDULED LINEAR MPCS
+mpcAPPROACH = scheduledControllersLin.APPROACH;
+mpcCLOSEUP  = scheduledControllersLin.CLOSEUP;
+mpcLANDING  = scheduledControllersLin.LANDING;
+mpcFLARE    = scheduledControllersLin.FLARE;
 
 % RUN
 load_system(model);
 params = [drone.mass; environment.g; drone.inertia_diagonalForm];
-createParameterBus(controller, strcat(model, '/Drone Controller/Nonlinear MPC Controller'), 'paramsBus', {params});
+%createParameterBus(controller, strcat(model, '/Drone Controller/Nonlinear MPC Controller'), 'paramsBus', {params});
 set_param(model, 'StopTime', num2str(StopTime));
 out = sim(model);
 %close_system(model, 0);
