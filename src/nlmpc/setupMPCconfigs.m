@@ -9,16 +9,19 @@ cfg.P  = 20;        % prediction horizon in terms of step.
 cfg.M  = 5;         % control horizon [steps]: number of free input moves optimised.
 
 
-% WEIGHTS
+%%  WEIGHTS FOR NORMAL CONTROLLERS
 % Output weights: cost of tracking error on each output [x y z vx vy vz qx qy qz].
 %   qx qy qz are the quaternion vector part.
 %   1 = tracked normally, 0 = not tracked (free to move as the MPC needs).
 cfg.weights.out  = [1 1 1  1 1 1  0 0 0  0 0 0];
                     %   x y z    : 1   tracked with full priority
-                    %   vx vy vz : 0   not tracked
+                    %   vx vy vz : 1   tracked with full priority
                     %   qx qy qz : 0   not tracked
 
 cfg.weights.rate = [0.1 0.1 0.1 0.1];
+
+%% WEIGHTS FOR SCHEDULED CONTROLLERS
+cfg.weightsScheduled = scheduledWeightsConfig();
 
 % LIMITS
 % The oprimizer sees these as hard constraints

@@ -29,11 +29,11 @@ drone = setupDrone();
 boat = setupBoat();
 plane = setupPlane();
 environment = setupEnvironment();
-controller = setupController();
 scheduler = setupScheduler();
 
-%controllerLin = setupLinearController(drone, environment);
-scheduledControllersLin = setupScheduledLinearControllers(drone,environment);
+%controller = setupController(); % NON LINEAR MPC
+%controllerLin = setupLinearController(drone, environment); % LINEAR MPC
+scheduledControllersLin = setupScheduledLinearControllers(drone,environment); % SCHEDULED LINEAR MPCS
 
 % RUN
 load_system(model);
