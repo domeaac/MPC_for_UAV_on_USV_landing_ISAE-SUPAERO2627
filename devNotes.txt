@@ -12,7 +12,7 @@ KEEP IN MIND
   to test the relative dynamics MPC 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 WIP
-
+- reference frame switch within the scheduled MPC
 - weights tuning MPC
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 OPEN QUESTIONS

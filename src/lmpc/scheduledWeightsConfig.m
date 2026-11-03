@@ -7,8 +7,8 @@ function out = scheduledWeightsConfig()
 
 out.out  = [0.3 0.3 0.3  1 1 1  0   0   0  0   0   0  ; % APPROACG
             1   1   1    1 1 1  0   0   0  0   0   0  ; % CLOSEUP
-            3   3   1    2 2 2  0   0   0  0.1 0.1 0.1; % LANDING
-            5   5   3    3 3 3  0.5 0.5 0  0.1 0.1 0.1]; % FLARE
+            1   1   1    2 2 2  0   0   1  0.1 0.1 0.1; % LANDING
+            0.5   0.5   0.5    2 2 2   0.5 0.5 1  2 2 2]; % FLARE
 
 out.rate = [0.2  0.2  0.2  0.2 ;
             0.1  0.1  0.1  0.1 ;
