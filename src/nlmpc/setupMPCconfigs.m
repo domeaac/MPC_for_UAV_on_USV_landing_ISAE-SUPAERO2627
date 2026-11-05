@@ -2,7 +2,7 @@ function cfg = setupMPCconfigs()
 
 % TIMING
 cfg.Ts = 0.025;      % sample time [s], meaning that the controller runs at 1/Ts [Hz].
-cfg.P  = 20;        % prediction horizon in terms of step.
+cfg.P  = 100;        % prediction horizon in terms of step.
                     % NOTE: Se devo controllare in pos e vel devo tenere a mente che
                     %       vel è il risultato di 4 integrators (torque -> rate -> tilt (che crea una forza) e dunque acceleration -> vel -> pos), so the
                     %       quindi MPC has to see far enough ahead to know that tilting pays off.
