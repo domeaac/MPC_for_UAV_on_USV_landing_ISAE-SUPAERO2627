@@ -23,4 +23,24 @@ out.vel    = [ Inf Inf Inf ;
                Inf Inf Inf ;
                Inf Inf Inf ];
 
+out.posMin = [ -Inf -Inf -0.01 ;
+               -Inf -Inf -0.01 ;
+               -Inf -Inf -0.01 ;
+               -Inf -Inf -0.01 ];
+
+out.posMax = [  Inf  Inf  Inf ;
+                Inf  Inf  Inf ;
+                Inf  Inf  Inf ;
+                Inf  Inf  Inf ];
+
+out.angRate = [ Inf Inf Inf ;
+                Inf Inf Inf ;
+                Inf Inf Inf ;
+                Inf Inf Inf ];
+
+out.ecr    = [ 0 ;
+               0 ;
+               0 ;
+               0 ];
+
 end

@@ -16,6 +16,10 @@ for k = 1:numel(phases)
     lim.torque = limits.torque(k,:);
     lim.tilt   = limits.tilt(k);
     lim.vel    = limits.vel(k,:);
+    lim.posMin = limits.posMin(k,:);
+    lim.posMax = limits.posMax(k,:);
+    lim.angRate = limits.angRate(k,:);
+    lim.ecr    = limits.ecr(k);
 
     obj = baseMPC;
     obj = setWeights(obj, w);
@@ -53,8 +57,10 @@ end
 function mpcobj = setLimits(mpcobj, lim)
 THRUST = 1;
 TORQUE = 2:4;
+POS    = 1:3;
 VEL    = 4:6;
 TILT   = 7:8;
+RATE   = 10:12;
 
 mpcobj.MV(THRUST).Min = lim.thrust(1);
 mpcobj.MV(THRUST).Max = lim.thrust(2);
@@ -65,13 +71,22 @@ for i = TORQUE
 end
 
 for i = 1:3
-    mpcobj.OV(VEL(i)).Min = -lim.vel(i);
-    mpcobj.OV(VEL(i)).Max =  lim.vel(i);
+    mpcobj.OV(POS(i)).Min  =  lim.posMin(i);
+    mpcobj.OV(POS(i)).Max  =  lim.posMax(i);
+    mpcobj.OV(VEL(i)).Min  = -lim.vel(i);
+    mpcobj.OV(VEL(i)).Max  =  lim.vel(i);
+    mpcobj.OV(RATE(i)).Min = -lim.angRate(i);
+    mpcobj.OV(RATE(i)).Max =  lim.angRate(i);
 end
 
-qlim = sin(deg2rad(lim.tilt) / 2);
+qlim = sin(min(deg2rad(lim.tilt), pi) / 2);
 for i = TILT
     mpcobj.OV(i).Min = -qlim;
     mpcobj.OV(i).Max =  qlim;
+end
+
+for i = [POS VEL TILT RATE]
+    mpcobj.OV(i).MinECR = lim.ecr;
+    mpcobj.OV(i).MaxECR = lim.ecr;
 end
 end
