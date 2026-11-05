@@ -19,7 +19,7 @@ for k = 1:numel(phases)
     lim.posMin = limits.posMin(k,:);
     lim.posMax = limits.posMax(k,:);
     lim.angRate = limits.angRate(k,:);
-    lim.ecr    = limits.ecr(k);
+    lim.ecr    =  limits.ecr(k,:);
 
     obj = baseMPC;
     obj = setWeights(obj, w);
@@ -84,9 +84,13 @@ for i = TILT
     mpcobj.OV(i).Min = -qlim;
     mpcobj.OV(i).Max =  qlim;
 end
-
-for i = [POS VEL TILT RATE]
-    mpcobj.OV(i).MinECR = lim.ecr;
-    mpcobj.OV(i).MaxECR = lim.ecr;
+% ECR per group, same order as columns of limits.ecr: [pos vel tilt angRate]
+groups = {POS, VEL, TILT, RATE};
+for g = 1:numel(groups)
+    for i = groups{g}
+        mpcobj.OV(i).MinECR = lim.ecr(g);
+        mpcobj.OV(i).MaxECR = lim.ecr(g);
+    end
 end
+
 end

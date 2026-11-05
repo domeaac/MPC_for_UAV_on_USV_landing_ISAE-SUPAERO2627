@@ -1,0 +1,48 @@
+function out = scheduledLimitsConfig()
+
+val = -20;
+
+%              min  max
+out.thrust = [ -3   3 ;   % APPROACH
+               -3   3 ;   % CLOSEUP
+               -3   3 ;   % LANDING
+               -3   3 ];  % FLARE
+
+out.torque = [ -5   5 ;
+               -5   5 ;
+               -5   5 ;
+               -5   5 ];
+
+%              [deg]
+out.tilt   = [ 15 ;
+               15 ;
+               10 ;
+               5 ];
+
+%              |v| max [m/s], Inf = free
+out.vel    = [ 5 5 5 ;
+               5 5 0.5 ;
+               5 5 0.25 ;
+               5 5 0.05 ];
+
+out.posMin = [ -inf -inf -inf ;
+               val-25 val-25 val+5 ;
+               val-6 val-6 val+3 ;
+               val-1 val-1 val-1 ];
+
+out.posMax = [  inf  inf  inf ;
+                val+25  val+25  val+25 ;
+                val+6  val+6  val+6 ;
+                val-1  val+1.5  val+1.5 ];
+
+out.angRate = [ Inf Inf Inf ;
+                Inf Inf Inf ;
+                Inf Inf Inf ;
+                Inf Inf Inf ];
+
+out.ecr    = [ 1 ;
+               1 ;
+               1 ;
+               1 ];
+
+end
