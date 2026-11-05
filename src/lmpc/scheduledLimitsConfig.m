@@ -20,10 +20,10 @@ out.tilt   = [ 20 ;
                5 ];
 
 %              |v| max [m/s], Inf = free
-out.vel    = [ 5 5 5 ;
-               5 5 1.5 ;
-               5 5 0.8 ;
-               5 5 0.4 ];
+out.vel    = [ 5   5   5   ;
+               3   3   1.5 ;
+               1.5 1.5 0.8 ;
+               0.5 0.5 0.4 ];
 
 out.posMin = [ -inf -inf -inf ;
                val-25 val-25 val+4 ;
@@ -35,10 +35,11 @@ out.posMax = [  inf  inf  inf ;
                 val+6  val+6  val+6 ;
                 val+2  val+2  val+2 ];
 
-out.angRate = [ 15 15 15 ;
-                10 10 10 ;
-                5 5 5 ;
-                5 5 5 ]*pi/180;
+%               [deg/s] - tighter values are violated anyway and only add conflicts
+out.angRate = [ 60 60 60 ;
+                45 45 45 ;
+                30 30 30 ;
+                30 30 30 ]*pi/180;
 
 out.ecr  = [  1    0.2  0.01  0.2 ;   % APPROACH
               1    0.2  0.01  0.2 ;   % CLOSEUP
