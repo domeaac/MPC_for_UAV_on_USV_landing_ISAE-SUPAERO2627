@@ -3,7 +3,7 @@ function out = setupDrone()
 drone.mass = 1; % kg
 drone.m = drone.mass;  
 
-drone.x0 = [0; 0; 0]; % m
+drone.x0 = [-20.5; -20.5; -20.5]; % m
 
 drone.v0 = [0; 0; 0]; % m/s
 
