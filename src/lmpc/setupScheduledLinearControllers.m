@@ -7,6 +7,12 @@ phases  = {'APPROACH', 'CLOSEUP', 'LANDING', 'FLARE'};
 plant   = buildHoverPlant(drone, environment);
 baseMPC = mpc(plant, cfg.Ts, cfg.P, cfg.M);
 
+% Bypass built-in KF: no output-disturbance integrators (default adds 8),
+% so x[k|k] = plant state only (12x1). State comes from x[k|k] inport.
+ny = size(plant, 1);
+setoutdist(baseMPC, 'model', tf(zeros(ny,1)));
+setEstimator(baseMPC, 'custom');
+
 controllers = struct();
 for k = 1:numel(phases)
     w.out  = weights.out(k,:);

@@ -22,6 +22,9 @@ mpcCLOSEUP  = scheduledControllersLin.CLOSEUP;
 mpcLANDING  = scheduledControllersLin.LANDING;
 mpcFLARE    = scheduledControllersLin.FLARE;
 
+% only for flare only SIM!
+x0_FLARE    = mpcstate(mpcFLARE);    x0_FLARE.Plant(1:6)    = [drone.x0; drone.v0];
+
 % RUN
 load_system(model);
 params = [drone.mass; environment.g; drone.inertia_diagonalForm];
