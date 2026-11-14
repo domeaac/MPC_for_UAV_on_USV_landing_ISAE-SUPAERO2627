@@ -2,10 +2,7 @@ clear; close all; clc;
 
 % INIT
 addpath(genpath(pwd))
-%model = "model_NLMPC_LMPCyaw0";
-%model = "model_NLMPC_LMPCyawVar";
-model = "model_LMPC_yawVar_Relative";
-
+model = "model_LMPC_yawVarReallyRelative";
 StopTime = 100; % s
 
 % SETUP SCRIPTS
