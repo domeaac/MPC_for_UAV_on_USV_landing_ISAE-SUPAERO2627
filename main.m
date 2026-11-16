@@ -2,7 +2,7 @@ clear; close all; clc;
 
 % INIT
 addpath(genpath(pwd))
-model = "model_LMPC_yawVarReallyRelative";
+model = "model_LMPC_yawVarReallyRelative2";
 StopTime = 100; % s
 
 % SETUP SCRIPTS
@@ -21,9 +21,6 @@ mpcAPPROACH = scheduledControllersLin.APPROACH;
 mpcCLOSEUP  = scheduledControllersLin.CLOSEUP;
 mpcLANDING  = scheduledControllersLin.LANDING;
 mpcFLARE    = scheduledControllersLin.FLARE;
-
-% only for flare only SIM!
-x0_FLARE    = mpcstate(mpcFLARE);    x0_FLARE.Plant(1:6)    = [drone.x0; drone.v0];
 
 % RUN
 load_system(model);
