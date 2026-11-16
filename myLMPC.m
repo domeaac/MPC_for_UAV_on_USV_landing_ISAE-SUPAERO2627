@@ -5,6 +5,6 @@ function out = myLMPC(model, state, reference, tP, costfunc, terminalcostfunc)
 
 % deltastate = model.phi*state + model.lambda*input
 % 
-
+test test
 
 end
