@@ -46,13 +46,6 @@ The chart only falls back to an earlier phase when its `returnPossible` input is
 
 Constraints tighten as the drone gets closer to the deck (`src/lmpc/scheduledLimitsConfig.m`):
 
-| Phase | Max tilt | Max \|v\| (x, y, z) | Max body rate |
-|---|---|---|---|
-| APPROACH | 20° | 5, 5, 5 m/s | 60°/s |
-| CLOSEUP | 15° | 3, 3, 1.5 m/s | 45°/s |
-| LANDING | 10° | 1.5, 1.5, 0.8 m/s | 30°/s |
-| FLARE | 5° | 0.5, 0.5, 0.4 m/s | 30°/s |
-
 The inputs are hard-limited in every phase: thrust deviation ±3 N, torques ±1 N·m. The output constraints are soft, with ECR values set for each group (position, velocity, tilt, rate). The weights are in `src/lmpc/scheduledWeightsConfig.m`: position and velocity are tracked in every phase, and attitude and body rates are only weighted during LANDING and FLARE.
 
 The toolbox's built-in state estimator is bypassed (`setEstimator(..., 'custom')`, no output-disturbance integrators). The MPC blocks receive the 12 plant states directly through their `x[k|k]` inport.
@@ -101,17 +94,6 @@ src/
 ```
 
 `src/subsystems/` also contains spacecraft-attitude blocks (orbit, magnetorquer, reaction wheel, SRP, etc.) that the landing models do not use.
-
-## Main parameters
-
-| What | Where | Value |
-|---|---|---|
-| MPC sample time | `setupMPCconfigs.m` | `Ts = 0.025 s` (40 Hz) |
-| Prediction / control horizon | `setupMPCconfigs.m` | `P = 100`, `M = 5` steps (2.5 s / 0.125 s) |
-| Drone mass, inertia | `setupDrone.m` | 1 kg, diag(0.1, 0.1, 0.1) kg·m² |
-| USV inertia | `setupBoat.m` | diag(25, 5, 6) kg·m² |
-| Deck contact stiffness / damping | `setupPlane.m` | `K = 10`, `C = 100` |
-| Target trajectory | `setupTargetTrajectory.m` | circle, `R = 5 m`, `w = 0.2 rad/s` |
 
 ## Requirements
 
