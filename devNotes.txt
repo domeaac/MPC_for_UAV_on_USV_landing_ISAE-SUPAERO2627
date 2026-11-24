@@ -14,6 +14,12 @@ KEEP IN MIND
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 WIP
-
+- custom LMPC matlab function block implementation and validation
+- custom NMPC matlab function block implementation and validation
+- wind modeling
+- robustness analysis framework 
+- control action analysis framework
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 OPEN QUESTIONS
+- real drone data
+- real boat data
