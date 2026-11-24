@@ -1,5 +1,13 @@
 Simulink Models:
 
+%% CURRENTLY USED MODELS
+
+model_custom_LMPC.slx contains the currently WIP implementation of my custom model_LMPC_yaw0_relativeDynamics
+
+model_custo_yawVarReallyRelative2.slx contains a working implementation of the scheduled MPC with relative dynamics and target tracking
+
+
+%% OLD/OUTDATED MODELS
 boatModel.slx contains (who would have guessed) a/maybe several USV model(s) to try robustness on
 
 model_NLMPC_LMPC_yaw0.slx contains both a Non Linear MPC and a Linear MPC based on a quaternion 

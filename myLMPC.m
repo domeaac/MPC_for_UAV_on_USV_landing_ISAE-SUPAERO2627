@@ -3,7 +3,7 @@ function u = myLMPC(model, state, reference, tP, costfunc)
 % Control (MPC)", pp. 4-8. 
 
 % discrete model x(k+1) = Phi x(k) + Gamma u(k), eq. (3)
-sys = c2d(ss(model.A, model.B, model.C, 0), model.Ts);
+sys = c2d(ss(model.A, model.B, model.C, 0), model.Ts); % converto il modello da continuous a discreet 
 Phi = sys.A; Gamma = sys.B; C = sys.C;
 [n, m] = size(Gamma); p = size(C, 1);
 
@@ -24,7 +24,8 @@ end
 
 % minimise J over dU
 xa = [state.x - state.x_prev; C*state.x];
-rp = reference(:); if numel(rp) == p, rp = repmat(rp, tP, 1); end
+rp = reference(:); % assicuro vettor colonna
+if numel(rp) == p, rp = repmat(rp, tP, 1); end
 J  = @(dU) costfunc(W*xa + Z*dU, dU, rp);
 
 dU = fminunc(J, zeros(m*tP, 1), optimoptions('fminunc', 'Display', 'off'));
