@@ -1,9 +1,9 @@
-function u = myLMPC(model, state, reference, tP, costfunc)
+function u = myLMPC(model, state, reference, tP, costfuncWeights, t, Ts, ERC)
 % Linear MPC from S. H. Zak, "An Introduction to Model-based Predictive
 % Control (MPC)", pp. 4-8. 
 
 % discrete model x(k+1) = Phi x(k) + Gamma u(k), eq. (3)
-sys = c2d(ss(model.A, model.B, model.C, 0), model.Ts); % converto il modello da continuous a discreet 
+sys = c2d(ss(model.A, model.B, model.C, 0), Ts); % converto il modello da continuous a discreet 
 Phi = sys.A; Gamma = sys.B; C = sys.C;
 [n, m] = size(Gamma); p = size(C, 1);
 
@@ -26,7 +26,9 @@ end
 xa = [state.x - state.x_prev; C*state.x];
 rp = reference(:); % assicuro vettor colonna
 if numel(rp) == p, rp = repmat(rp, tP, 1); end
-J  = @(dU) costfunc(W*xa + Z*dU, dU, rp);
+
+costfuncWeights.OutputVariables = 
+J  = @(dU) costfunc(W*xa + Z*dU, dU, rp, t);
 
 dU = fminunc(J, zeros(m*tP, 1), optimoptions('fminunc', 'Display', 'off'));
 u  = state.u_prev + dU(1:m);    % receding horizon: apply only du(k)
